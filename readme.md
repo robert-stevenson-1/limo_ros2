@@ -63,10 +63,25 @@ git clone https://ghproxy.com/https://github.com/YDLIDAR/YDLidar-SDK.git &&\
 
 ```
 
+# Install ROS dependencies
+```shell
+
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+
+```
+
 # Convenience script for compiling limo_ros2 packages
 ```
-# In workspace root
+# do once, copy to workspace root
+
+cp src/limo_ros2/./build.sh . 
+
+# in workspace root
 ./build.sh
+
+# Remember to always source ros workspace on new terminal
+. install/setup.bash
 
 ```
 

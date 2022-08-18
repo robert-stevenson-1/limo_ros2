@@ -14,6 +14,8 @@ def generate_launch_description():
                                              default_value='odom'),
         launch.actions.DeclareLaunchArgument(name='open_rviz',
                                              default_value='false'),
+        launch.actions.DeclareLaunchArgument(name='use_mcnamu',
+                                             default_value='false'),
         launch_ros.actions.Node(
             package='rviz2',
             name='rviz2',
@@ -48,7 +50,9 @@ def generate_launch_description():
                 'port_name':
                 launch.substitutions.LaunchConfiguration('port_name'),
                 'odom_topic_name':
-                launch.substitutions.LaunchConfiguration('odom_topic_name')
+                launch.substitutions.LaunchConfiguration('odom_topic_name'),
+                'use_mcnamu':
+                launch.substitutions.LaunchConfiguration('use_mcnamu')
             }.items()),
         launch.actions.IncludeLaunchDescription(
             launch.launch_description_sources.PythonLaunchDescriptionSource(
