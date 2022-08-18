@@ -2,21 +2,21 @@
 # 克隆仓库
 ```shell
 # 创建本地工作目录 Create local workspace
-mkdir -p ~/agx_workspace
-cd ~/agx_workspace
+mkdir -p ~/limo_ros2_ws/src
+cd ~/limo_ros2_ws/src
 # 克隆项目 Clone the project
-git clone https://github.com/agilexrobotics/limo_ros2.git src
-# 中国大陆用户加速下载(Provide accelerated downloads for users in Chinese Mainland) 
-# git clone https://ghproxy.com/https://github.com/agilexrobotics/limo_ros2.git src
+git clone https://github.com/westonrobot/limo_ros2.git
 
-mv ~/agx_workspace/src/.devcontainer ~/agx_workspace
+mv limo_ros2/.devcontainer/ ..
+
+code ..
 ```
-``【推荐】使用 VS Code remote 插件 连接到 limo，打开 ~/agx_workspace 后在菜单中选择 reopen in container``
- ``[Recommend] Login the limo via VS Code remote plugin, open ~/agx_workspace.Then select reopen in container in the menu``
+[Recommend] Login the limo via VS Code Remote Development extension. 
 
+In the workspace root folder, Crtl + Shift + P to open up the command palette, and select Remote-Containers: Rebuild and Reopen in Container``
 
+或运行自动配置脚本 Or running automatically setup script``
 
-``或运行自动配置脚本 Or running automatically setup script``
 ```shell
 cd ~/agx_workspace/src
 chmod +x setup.sh
@@ -61,10 +61,13 @@ git clone https://ghproxy.com/https://github.com/YDLIDAR/YDLidar-SDK.git &&\
     pip install . &&\
     cd .. && rm -r YDLidar-SDK 
 
-# 编译功能包 Compile limo_ros2 packages
-cd ~/agx_workspace
-catkin_make
-source devel/setup.bash
+```
+
+# Convenience script for compiling limo_ros2 packages
+```
+# In workspace root
+./build.sh
+
 ```
 
 # 导航 Navigation
