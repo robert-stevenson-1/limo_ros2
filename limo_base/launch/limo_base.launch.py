@@ -25,7 +25,7 @@ def generate_launch_description():
     #                                                description='Whether running with simulator')
     sim_control_rate_arg = DeclareLaunchArgument('control_rate', default_value='50',
                                                  description='Simulation control loop update rate')
-    use_mcnamu_arg = DeclareLaunchArgument('use_mcnamu', default_value='False',
+    use_mcnamu_arg = DeclareLaunchArgument('use_mcnamu', default_value='false',
                                                  description='Use mecanum motion mode')
     
     limo_base_node = launch_ros.actions.Node(
@@ -41,8 +41,7 @@ def generate_launch_description():
                 'odom_topic_name': launch.substitutions.LaunchConfiguration('odom_topic_name'),
                 # 'simulated_robot': launch.substitutions.LaunchConfiguration('simulated_robot'),
                 'control_rate': launch.substitutions.LaunchConfiguration('control_rate'),
-                'use_mcnamu': launch.substitions.LaunchConfiguration('use_mcnamu'),
-
+                'use_mcnamu': launch.substitutions.LaunchConfiguration('use_mcnamu'),
         }])
 
     return LaunchDescription([
