@@ -27,17 +27,17 @@ def generate_launch_description():
                   ('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
 
-    param_substitutions = { 
-        'use_sim_time': use_sim_time, 
-        'default_bt_xml_filename': default_bt_xml_filename, 
-        'autostart': autostart, 
-        'map_subscribe_transient_local': map_subscribe_transient_local} 
+    # param_substitutions = { 
+    #     'use_sim_time': use_sim_time, 
+    #     'default_bt_xml_filename': default_bt_xml_filename, 
+    #     'autostart': autostart, 
+    #     'map_subscribe_transient_local': map_subscribe_transient_local} 
     
-    configured_params = RewrittenYaml( 
-            source_file=params_file, 
-            root_key=namespace, 
-            param_rewrites=param_substitutions, 
-            convert_types=True) 
+    # configured_params = RewrittenYaml( 
+    #         source_file=params_file, 
+    #         root_key=namespace, 
+    #         param_rewrites=param_substitutions, 
+    #         convert_types=True) 
 
 
     return LaunchDescription([
@@ -81,7 +81,7 @@ def generate_launch_description():
             package='nav2_controller',
             node_executable='controller_server',
             output='screen',
-            parameters=[configured_params],
+            # parameters=[configured_params],
             remappings=remappings),
 
         Node(
@@ -89,7 +89,7 @@ def generate_launch_description():
             node_executable='planner_server',
             node_name='planner_server',
             output='screen',
-            parameters=[configured_params],
+            # parameters=[configured_params],
             remappings=remappings),
 
         Node(
@@ -105,7 +105,7 @@ def generate_launch_description():
             node_executable='bt_navigator',
             node_name='bt_navigator',
             output='screen',
-            parameters=[configured_params],
+            parameters=['default_bt_xml_filename'],
             remappings=remappings),
 
         Node(
@@ -113,7 +113,7 @@ def generate_launch_description():
             node_executable='waypoint_follower',
             node_name='waypoint_follower',
             output='screen',
-            parameters=[configured_params],
+            # parameters=[configured_params],
             remappings=remappings),
         
         Node(
