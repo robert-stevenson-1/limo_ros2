@@ -7,7 +7,6 @@ from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-
 from nav2_common.launch import RewrittenYaml
 
 def generate_launch_description():
@@ -30,11 +29,11 @@ def generate_launch_description():
         'use_sim_time': use_sim_time,
         'yaml_filename': map_yaml_file}
 
-    # configured_params = RewrittenYaml(
-    #     source_file=params_file,
-    #     root_key=namespace,
-    #     param_rewrites=param_substitutions,
-    #     convert_types=True)
+    configured_params = RewrittenYaml(
+        source_file=params_file,
+        root_key=namespace,
+        param_rewrites=param_substitutions,
+        convert_types=True)
     
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -72,8 +71,8 @@ def generate_launch_description():
             node_executable='amcl',
             node_name='amcl',
             output='screen',
-            # parameters=[configured_params],
-            # use_remappings=IfCondition(use_remappings),
+            parameters=[configured_params],
+            use_remappings=IfCondition(use_remappings),
             remappings=remappings),
 
         Node(
@@ -91,7 +90,7 @@ def generate_launch_description():
             node_executable='map_server',
             node_name='map_server',
             output='screen',
-            parameters=[{'yaml_filename': map_yaml_file}],
-            # use_remappings=IfCondition(use_remappings),
+            parameters=[configured_params],
+            use_remappings=IfCondition(use_remappings),
             remappings=remappings),
     ])

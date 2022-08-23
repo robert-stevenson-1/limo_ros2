@@ -27,7 +27,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-# from nav2_common.launch import RewrittenYaml
+from nav2_common.launch import RewrittenYaml
 
 
 def generate_launch_description():
@@ -39,12 +39,11 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
     params_file = LaunchConfiguration('params_file')
     default_bt_xml_filename = LaunchConfiguration('default_bt_xml_filename')
-    map_subscribe_transient_local = LaunchConfiguration(
-        'map_subscribe_transient_local')
+    map_subscribe_transient_local = LaunchConfiguration('map_subscribe_transient_local')
 
     lifecycle_nodes = ['controller_server',
                        'planner_server',
-                       'recoveries_server',
+                       'behavior_server',
                        'bt_navigator',
                        'waypoint_follower']
 
@@ -64,11 +63,11 @@ def generate_launch_description():
         'autostart': autostart,
         'map_subscribe_transient_local': map_subscribe_transient_local}
 
-    # configured_params = RewrittenYaml(
-    #     source_file=params_file,
-    #     root_key=namespace,
-    #     param_rewrites=param_substitutions,
-    #     convert_types=True)
+    configured_params = RewrittenYaml(
+        source_file=params_file,
+        root_key=namespace,
+        param_rewrites=param_substitutions,
+        convert_types=True)
 
     return LaunchDescription([
         # Set env var to print messages to stdout immediately
@@ -89,7 +88,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'params_file',
             default_value=os.path.join(
-                limo_bringup_dir, 'param', 'amcl_params.yaml'),
+                limo_bringup_dir, 'param', 'nav2_params.yaml'),
             description='Full path to the ROS2 parameters file to use'),
 
         DeclareLaunchArgument(
@@ -97,7 +96,7 @@ def generate_launch_description():
             default_value=os.path.join(
                 get_package_share_directory('limo_bringup'),
                 'param', 'navigate_w_replanning_and_recovery.xml'),
-            description='Full path to the behavior tree xml file to use'),
+            description='Full path to the behaviors tree xml file to use'),
 
         DeclareLaunchArgument(
             'map_subscribe_transient_local', default_value='true',  # false
@@ -107,32 +106,23 @@ def generate_launch_description():
             package='nav2_controller',
             executable='controller_server',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                {'default_bt_xml_filename': default_bt_xml_filename},
-                {'autostart': autostart},
-                {'map_subscribe_transient_local': map_subscribe_transient_local}],
-            remappings=remappings),
+            parameters=[configured_params],
+            remappings=remappings,),
 
         Node(
             package='nav2_planner',
             executable='planner_server',
             name='planner_server',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                {'default_bt_xml_filename': default_bt_xml_filename},
-                {'autostart': autostart},
-                {'map_subscribe_transient_local': map_subscribe_transient_local}],
+            parameters=[configured_params],
             remappings=remappings),
 
         Node(
-            package='nav2_recoveries',
-            executable='recoveries_server',
-            name='recoveries_server',
+            package='nav2_behaviors',
+            executable='behavior_server',
+            name='behavior_server',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                {'default_bt_xml_filename': default_bt_xml_filename},
-                {'autostart': autostart},
-                {'map_subscribe_transient_local': map_subscribe_transient_local}],
+            parameters=[configured_params],
             remappings=remappings),
 
         Node(
@@ -140,10 +130,7 @@ def generate_launch_description():
             executable='bt_navigator',
             name='bt_navigator',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                {'default_bt_xml_filename': default_bt_xml_filename},
-                {'autostart': autostart},
-                {'map_subscribe_transient_local': map_subscribe_transient_local}],
+            parameters=[configured_params],
             remappings=remappings),
 
         Node(
@@ -151,10 +138,7 @@ def generate_launch_description():
             executable='waypoint_follower',
             name='waypoint_follower',
             output='screen',
-            parameters=[{'use_sim_time': use_sim_time},
-                {'default_bt_xml_filename': default_bt_xml_filename},
-                {'autostart': autostart},
-                {'map_subscribe_transient_local': map_subscribe_transient_local}],
+            parameters=[configured_params],
             remappings=remappings),
 
         Node(

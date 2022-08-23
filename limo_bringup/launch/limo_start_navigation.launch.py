@@ -9,7 +9,6 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
-
 def generate_launch_description():
     bringup_dir = get_package_share_directory('limo_bringup')
     launch_dir = os.path.join(bringup_dir, 'launch')
