@@ -18,7 +18,6 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
     params_file = LaunchConfiguration('params_file')
     use_lifecycle_mgr = LaunchConfiguration('use_lifecycle_mgr')
-    use_remappings = LaunchConfiguration('use_remappings')
 
     remappings = [((namespace, '/tf'), '/tf'),
                   ((namespace, '/tf_static'), '/tf_static'),
@@ -68,18 +67,17 @@ def generate_launch_description():
 
         Node(
             package='nav2_amcl',
-            node_executable='amcl',
-            node_name='amcl',
+            executable='amcl',
+            name='amcl',
             output='screen',
             parameters=[configured_params],
-            use_remappings=IfCondition(use_remappings),
             remappings=remappings),
 
         Node(
             condition=IfCondition(use_lifecycle_mgr),
             package='nav2_lifecycle_manager',
-            node_executable='lifecycle_manager',
-            node_name='lifecycle_manager_localization',
+            executable='lifecycle_manager',
+            name='lifecycle_manager_localization',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time},
                         {'autostart': autostart},
@@ -87,10 +85,9 @@ def generate_launch_description():
         
         Node(
             package='nav2_map_server',
-            node_executable='map_server',
-            node_name='map_server',
+            executable='map_server',
+            name='map_server',
             output='screen',
             parameters=[configured_params],
-            use_remappings=IfCondition(use_remappings),
             remappings=remappings),
     ])
