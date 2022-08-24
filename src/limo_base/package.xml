@@ -4,7 +4,7 @@
   <name>limo_base</name>
   <version>0.0.1</version>
   <description>The limo base ros2 package</description>
-  <maintainer email="hans.kurnia@westonrobot.com">hanskw4267</maintainer>
+  <maintainer email="tang___xi@163.com">tangxi</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -14,7 +14,6 @@
   <depend>tf2</depend>
   <depend>tf2_ros</depend>
   <depend>nav_msgs</depend>
-  <depend>geometry_msgs</depend>
   
   <exec_depend>limo_msgs</exec_depend>
   <test_depend>ament_lint_auto</test_depend>

@@ -6,7 +6,7 @@ import launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 
 
@@ -42,14 +42,15 @@ def generate_launch_description():
         }])
 
     limo_joint_state_node = launch_ros.actions.Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[{'robot_description': model_path, 'use_sim_time': 'false'}]
+        package='joint_state_publisher',
+        executable='joint_state_publisher'
     )
     limo_robot_state_node = Node(
-    package='robot_state_publisher',
-    executable='robot_state_publisher',
-    parameters=[{'robot_description': model_path, 'use_sim_time': 'false'}]
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': Command(['xacro ', model_path])}]
     )
 
     return LaunchDescription([

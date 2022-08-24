@@ -31,12 +31,23 @@
 using namespace AgileX;
 std::shared_ptr<LimoDriver> robot;
 
+// int main(int argc, char **argv) {
+//     rclcpp::init(argc, argv);
+//     AgileX::LimoDriver driver; 
+//     rclcpp::spin(std::make_shared<LimoDriver>());
+//     rclcpp::Rate rate(50);
+//     rate.sleep();
+//     rclcpp::shutdown();
+//     return 0;
+// }
 
 int main(int argc, char **argv) {
   // setup ROS node
   rclcpp::init(argc, argv);
+  //   std::signal(SIGINT, DetachRobot);
 
-  rclcpp::spin(std::make_shared<LimoDriver>());
+  // robot = std::make_shared<LimoDriver>("limo_base");
+  rclcpp::spin(std::make_shared<LimoDriver>("limo_base"));
   rclcpp::Rate rate(100);
   rate.sleep();
   rclcpp::shutdown();
