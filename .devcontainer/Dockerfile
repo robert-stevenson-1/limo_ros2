@@ -1,4 +1,4 @@
-FROM ros:humble as dev
+FROM westonrobot/ros:humble-base-2022-08-23
 
 ENV DEBIAN_FRONTEND=noninteractive
 

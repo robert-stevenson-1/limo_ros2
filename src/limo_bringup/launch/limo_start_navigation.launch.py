@@ -33,6 +33,8 @@ from nav2_common.launch import RewrittenYaml
 def generate_launch_description():
     # Get the launch directory
     limo_bringup_dir = get_package_share_directory('limo_bringup')
+    rviz_config_dir = os.path.join(get_package_share_directory('limo_bringup'),
+                                   'config_files', 'demo_2d.rviz')
 
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -149,5 +151,11 @@ def generate_launch_description():
             parameters=[{'use_sim_time': use_sim_time},
                         {'autostart': autostart},
                         {'node_names': lifecycle_nodes}]),
-
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz_config_dir],
+            parameters=[{'use_sim_time': use_sim_time}],
+            output='screen'),
     ])

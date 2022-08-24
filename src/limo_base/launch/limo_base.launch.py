@@ -1,4 +1,5 @@
 import os
+from pyexpat import model
 import launch
 import launch_ros
 
@@ -10,8 +11,11 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    model_path = os.path.join(get_package_share_directory('limo_description'),
+                            'urdf', 'limo_four_diff.xacro')
+
     port_name_arg = DeclareLaunchArgument('port_name', default_value='ttyTHS1',
-                                         description='usb bus name, e.g. ttyTHS1')
+                                          description='usb bus name, e.g. ttyTHS1')
     odom_frame_arg = DeclareLaunchArgument('odom_frame', default_value='odom',
                                            description='Odometry frame id')
     base_link_frame_arg = DeclareLaunchArgument('base_frame', default_value='base_link',
@@ -21,15 +25,15 @@ def generate_launch_description():
     sim_control_rate_arg = DeclareLaunchArgument('control_rate', default_value='50',
                                                  description='Simulation control loop update rate')
     use_mcnamu_arg = DeclareLaunchArgument('use_mcnamu', default_value='false',
-                                                 description='Use mecanum motion mode')
-    
+                                           description='Use mecanum motion mode')
+
     limo_base_node = launch_ros.actions.Node(
         package='limo_base',
         executable='limo_base',
         output='screen',
         emulate_tty=True,
         parameters=[{
-                'port_name': launch.substitutions.LaunchConfiguration('port_name'),                
+                'port_name': launch.substitutions.LaunchConfiguration('port_name'),
                 'odom_frame': launch.substitutions.LaunchConfiguration('odom_frame'),
                 'base_frame': launch.substitutions.LaunchConfiguration('base_frame'),
                 'odom_topic_name': launch.substitutions.LaunchConfiguration('odom_topic_name'),
@@ -37,12 +41,25 @@ def generate_launch_description():
                 'use_mcnamu': launch.substitutions.LaunchConfiguration('use_mcnamu'),
         }])
 
+    limo_joint_state_node = launch_ros.actions.Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        parameters=[{'robot_description': model_path, 'use_sim_time': 'false'}]
+    )
+    limo_robot_state_node = Node(
+    package='robot_state_publisher',
+    executable='robot_state_publisher',
+    parameters=[{'robot_description': model_path, 'use_sim_time': 'false'}]
+    )
+
     return LaunchDescription([
-        port_name_arg,        
+        port_name_arg,
         odom_frame_arg,
         base_link_frame_arg,
         odom_topic_arg,
         sim_control_rate_arg,
         use_mcnamu_arg,
-        limo_base_node
+        limo_base_node,
+        limo_joint_state_node,
+        limo_robot_state_node
     ])

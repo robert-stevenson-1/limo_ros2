@@ -19,7 +19,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, Command
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import ThisLaunchFileDir
@@ -52,7 +52,7 @@ def generate_launch_description():
             'use_sim_time',
             default_value='false',
             description='Use simulation (Gazebo) clock if true'),
-
+            
         Node(
             package='cartographer_ros',
             executable='cartographer_node',
@@ -61,7 +61,6 @@ def generate_launch_description():
             parameters=[{'use_sim_time': use_sim_time}],
             arguments=['-configuration_directory', cartographer_config_dir,
                        '-configuration_basename', configuration_basename]),
-
         DeclareLaunchArgument(
             'resolution',
             default_value=resolution,
@@ -77,7 +76,6 @@ def generate_launch_description():
             launch_arguments={'use_sim_time': use_sim_time, 'resolution': resolution,
                               'publish_period_sec': publish_period_sec}.items(),
         ),
-
         Node(
             package='rviz2',
             executable='rviz2',
