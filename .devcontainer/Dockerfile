@@ -1,4 +1,4 @@
-FROM westonrobot/ros:humble-base-2022-08-23
+FROM westonrobot/ros:humble-base-20220827
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -28,6 +28,12 @@ RUN apt-get update \
     swig \
     software-properties-common \
     python3-pip \
+    ros-humble-rviz2* \
+    ros-humble-cartographer* \
+    ros-humble-nav* \
+    ros-humble-teleop-twist-keyboard \
+    ros-humble-joint-state-publisher* \
+    ros-humble-robot-state-publisher* \ 
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://ghproxy.com/https://github.com/YDLIDAR/YDLidar-SDK.git &&\

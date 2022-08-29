@@ -39,9 +39,9 @@ LimoDriver::LimoDriver(std::string node_name):rclcpp::Node(node_name),keep_runni
     this->declare_parameter<std::string>("port_name");   //声明参数
     this->declare_parameter<std::string>("odom_frame");
     this->declare_parameter<std::string>("base_frame");
-    this->declare_parameter<std::string>("pub_odom_tf");
-    this->declare_parameter<std::string>("use_mcnamu");
-    this->declare_parameter<std::string>("control_rate");  
+    this->declare_parameter<bool>("pub_odom_tf");
+    this->declare_parameter<bool>("use_mcnamu");
+    this->declare_parameter<int>("control_rate");  
 
     this->get_parameter_or<std::string>("port_name", port_name, "ttyTHS1");//获取参数
     this->get_parameter_or<std::string>("odom_frame", odom_frame_, "odom");

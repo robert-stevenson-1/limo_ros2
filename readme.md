@@ -85,6 +85,18 @@ cp src/limo_ros2/./build.sh .
 
 ```
 
+# SLAM
+
+```
+
+# Launch SLAM Node
+
+ros2 launch limo_bringup cartographer.launch.py
+ros2 run nav2_map_server map_saver_cli -f [filename]
+
+```
+
+
 # 导航 Navigation
 
 ```shell

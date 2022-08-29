@@ -26,6 +26,8 @@ def generate_launch_description():
                                                  description='Simulation control loop update rate')
     use_mcnamu_arg = DeclareLaunchArgument('use_mcnamu', default_value='false',
                                            description='Use mecanum motion mode')
+    pub_odom_tf_arg = DeclareLaunchArgument('pub_odom_tf', default_value='false',
+                                           description='Parameter to publish odom')
 
     limo_base_node = launch_ros.actions.Node(
         package='limo_base',
@@ -39,6 +41,7 @@ def generate_launch_description():
                 'odom_topic_name': launch.substitutions.LaunchConfiguration('odom_topic_name'),
                 'control_rate': launch.substitutions.LaunchConfiguration('control_rate'),
                 'use_mcnamu': launch.substitutions.LaunchConfiguration('use_mcnamu'),
+                'pub_odom_tf': launch.substitutions.LaunchConfiguration("pub_odom_tf")
         }])
 
     limo_joint_state_node = launch_ros.actions.Node(
@@ -60,6 +63,7 @@ def generate_launch_description():
         odom_topic_arg,
         sim_control_rate_arg,
         use_mcnamu_arg,
+        pub_odom_tf_arg,
         limo_base_node,
         limo_joint_state_node,
         limo_robot_state_node
