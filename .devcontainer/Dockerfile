@@ -34,6 +34,7 @@ RUN apt-get update \
     ros-humble-teleop-twist-keyboard \
     ros-humble-joint-state-publisher* \
     ros-humble-robot-state-publisher* \ 
+    ros-humble-xacro \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://ghproxy.com/https://github.com/YDLIDAR/YDLidar-SDK.git &&\
