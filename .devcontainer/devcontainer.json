@@ -7,8 +7,9 @@
             "WORKSPACE": "${containerWorkspaceFolder}"
         }
     },
+    "remoteUser": "ros",
     "runArgs": [
-        "--network=host",
+        // "--network=host",
         "-v=/dev:/dev",
         "--privileged",
         "--runtime=nvidia",
