@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   CYdLidar laser;
   std::string str_optvalue = "/dev/ydlidar";
   node->declare_parameter<std::string>("port");
-  node->get_parameter("port", str_optvalue);
+  node->get_parameter<std::string>("port", str_optvalue);
   ///lidar port
   laser.setlidaropt(LidarPropSerialPort, str_optvalue.c_str(), str_optvalue.size());
 

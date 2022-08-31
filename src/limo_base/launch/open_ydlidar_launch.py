@@ -26,12 +26,12 @@ import os
 
 
 def generate_launch_description():
-    share_dir = get_package_share_directory('limo_bringup')
+    share_dir = get_package_share_directory('ydlidar_ros2_driver')
     parameter_file = LaunchConfiguration('params_file')
 
     params_declare = DeclareLaunchArgument(
         'params_file',
-        default_value=os.path.join(share_dir, 'param', 'ydlidar.yaml'),
+        default_value=os.path.join(share_dir, 'params', 'ydlidar.yaml'),
         description='FPath to the ROS2 parameters file to use.')
 
     driver_node = LifecycleNode(
