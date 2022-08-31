@@ -6,6 +6,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 # RUN  sed -i "s/ports.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list
 # RUN  sed -i "s/archive.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list
 
+# Set up user account
+RUN useradd -ms /bin/bash ros && echo "ros:ros" | chpasswd && adduser ros sudo
+
 # Builder dependencies installation
 RUN apt-get update \
     && apt-get install -qq -y --no-install-recommends \
@@ -35,6 +38,7 @@ RUN apt-get update \
     ros-humble-joint-state-publisher* \
     ros-humble-robot-state-publisher* \ 
     ros-humble-xacro \
+    ros-humble-imu-tools \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://ghproxy.com/https://github.com/YDLIDAR/YDLidar-SDK.git &&\
