@@ -14,15 +14,12 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
  
   # Constants for paths to different files and folders
-  gazebo_models_path = 'models'
-  package_name = 'limo_gazebosim'
-  robot_name_in_model = 'limo_gazebosim'
-  rviz_config_file_path = 'rviz/urdf.rviz'
-  urdf_file_path = 'urdf/limo_four_diff.xacro'
-  world_file_path = 'worlds/empty_sit_map.world'
+  urdf_model_name = 'limo_four_diff.gazebo'
+  world_file_name = 'empty_sit_map.world'
+  rviz_config_file_name = 'urdf.rviz'
 
-  urdf_model = 'limo_four_diff.xacro'
- 
+  robot_name_in_model = 'limo_gazebosim'
+
   # Pose where we want to spawn the robot
   spawn_x_val = '0.0'
   spawn_y_val = '0.0'
@@ -33,18 +30,31 @@ def generate_launch_description():
  
   # Set the path to different files and folders.  
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
-  pkg_share = FindPackageShare(package=package_name).find(package_name)
 
   default_urdf_model_path = os.path.join(
     get_package_share_directory('limo_description'), 
     'urdf',
-    urdf_model
+    urdf_model_name
+  )
+ 
+  world_path = os.path.join(
+    get_package_share_directory('limo_gazebosim'), 
+    'worlds',
+    world_file_name
   )
 
-  default_rviz_config_path = os.path.join(pkg_share, rviz_config_file_path)
-  world_path = os.path.join(pkg_share, world_file_path)
-  gazebo_models_path = os.path.join(pkg_share, gazebo_models_path)
+  gazebo_models_path = os.path.join(
+    get_package_share_directory('limo_gazebosim'), 
+    'models'
+  )
   os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
+
+  default_rviz_config_path = os.path.join(
+    get_package_share_directory('limo_gazebosim'), 
+    'rviz',
+    rviz_config_file_name
+  )
+
  
   # Launch configuration variables specific to simulation
   use_sim_time = LaunchConfiguration('use_sim_time', default='true')
@@ -136,6 +146,7 @@ def generate_launch_description():
     executable='joint_state_publisher_gui',
     name='joint_state_publisher_gui',
     parameters=[{'use_sim_time': use_sim_time}])
+
   # start_dummy_sensors=Node(
   #   package='dummy_sensors', 
   #   node_executable='dummy_joint_states', 
