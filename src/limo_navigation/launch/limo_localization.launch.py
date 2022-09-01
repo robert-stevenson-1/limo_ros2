@@ -10,7 +10,7 @@ from launch_ros.actions import Node
 from nav2_common.launch import RewrittenYaml
 
 def generate_launch_description():
-    bringup_dir = get_package_share_directory('limo_bringup')
+    bringup_dir = get_package_share_directory('limo_navigation')
 
     namespace = LaunchConfiguration('namespace')
     map_yaml_file = LaunchConfiguration('map')

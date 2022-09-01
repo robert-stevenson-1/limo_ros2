@@ -87,8 +87,8 @@
                 <initial_orientation_as_reference>false</initial_orientation_as_reference>
                 <frame_name>imu_link</frame_name>
                 <ros>
-                    <namespace>/imu</namespace>
-                    <remapping>~/out:=data</remapping>
+                    <namespace>/</namespace>
+                    <remapping>~/out:=imu</remapping>
                 </ros>
             </plugin>
         </sensor>
@@ -183,7 +183,7 @@
             <publish_wheel_tf>false</publish_wheel_tf>
             <odometry_topic>odom</odometry_topic>
             <odometry_frame>odom</odometry_frame>
-            <robot_base_frame>base_footprint</robot_base_frame>
+            <robot_base_frame>base_link</robot_base_frame>
             <odometry_source>1</odometry_source>
             <ros>
                 <!-- <remapping>odom:=/odometry</remapping> -->

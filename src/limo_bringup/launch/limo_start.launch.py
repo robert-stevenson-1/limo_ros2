@@ -1,53 +1,73 @@
 import os
-import sys
 
-import launch
-import launch_ros.actions
 from ament_index_python.packages import get_package_share_directory
+
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    ld = launch.LaunchDescription([
-        launch.actions.DeclareLaunchArgument(name='port_name',
-                                             default_value='ttyTHS1'),
-        launch.actions.DeclareLaunchArgument(name='odom_topic_name',
-                                             default_value='odom'),
-        launch.actions.DeclareLaunchArgument(name='open_rviz',
-                                             default_value='false'),
-        launch.actions.DeclareLaunchArgument(name='use_mcnamu',
-                                             default_value='false'),
-        launch_ros.actions.Node(
-            package='rviz2',
-            name='rviz2',
-            executable='rviz2',
-            on_exit=launch.actions.Shutdown(),
-            condition=launch.conditions.IfCondition(
-                launch.substitutions.LaunchConfiguration('open_rviz'))),
-        launch_ros.actions.Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='base_link_to_imu',
-            arguments="0.0 0.0 0.0 0.0 0.0 0.0 /base_link /imu_link".split(
-                ' ')),
-        launch.actions.IncludeLaunchDescription(
-            launch.launch_description_sources.PythonLaunchDescriptionSource(
-                os.path.join(get_package_share_directory('limo_base'),
-                             'launch/limo_base.launch.py')),
-            launch_arguments={
-                'port_name':
-                launch.substitutions.LaunchConfiguration('port_name'),
+    # Get the launch directory
+    limo_base_launch_dir = os.path.join(
+        get_package_share_directory('limo_base'), 'launch')
+    ydlidar_launch_dir = os.path.join(
+        get_package_share_directory('ydlidar_ros2_driver'), 'launch')
+
+    # Create the launch configuration variables
+    namespace = LaunchConfiguration('namespace')
+    use_namespace = LaunchConfiguration('use_namespace')
+
+    declare_port_name = DeclareLaunchArgument(
+        'port_name',
+        default_value='ttyTHS1')
+
+    declare_odom_name = DeclareLaunchArgument(
+        name='odom_topic_name',
+        default_value='odom')
+
+    declare_use_mcnamu = DeclareLaunchArgument(
+        name='use_mcnamu',
+        default_value='false')
+
+    start_imu_static_transform_pub_cmd = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='base_link_to_imu',
+        arguments="0.0 0.0 0.0 0.0 0.0 0.0 /base_link /imu_link".split(
+            ' '))
+
+    launch_limo_base = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(limo_base_launch_dir, 'limo_base.launch.py')),
+        launch_arguments={
+            'port_name':
+                LaunchConfiguration('port_name'),
                 'odom_topic_name':
-                launch.substitutions.LaunchConfiguration('odom_topic_name'),
+                LaunchConfiguration('odom_topic_name'),
                 'use_mcnamu':
-                launch.substitutions.LaunchConfiguration('use_mcnamu')
-            }.items()),
-        launch.actions.IncludeLaunchDescription(
-            launch.launch_description_sources.PythonLaunchDescriptionSource(
-                os.path.join(get_package_share_directory('limo_base'),
-                             'launch','open_ydlidar_launch.py')))
-    ])
+                LaunchConfiguration('use_mcnamu')
+        }.items())
+
+    launch_yd_lidar = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(ydlidar_launch_dir, 'open_ydlidar_launch.py')
+        )
+    )
+
+    # Create the launch description and populate
+    ld = LaunchDescription()
+
+    # Declare the launch options
+    ld.add_action(declare_odom_name)
+    ld.add_action(declare_port_name)
+    ld.add_action(declare_use_mcnamu)
+
+    ld.add_action(launch_limo_base)
+    ld.add_action(launch_yd_lidar)
+
+    ld.add_action(start_imu_static_transform_pub_cmd)
+
     return ld
-
-
-if __name__ == '__main__':
-    generate_launch_description()
