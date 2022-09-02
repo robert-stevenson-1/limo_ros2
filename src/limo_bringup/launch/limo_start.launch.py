@@ -17,9 +17,6 @@ def generate_launch_description():
         get_package_share_directory('ydlidar_ros2_driver'), 'launch')
 
     # Create the launch configuration variables
-    namespace = LaunchConfiguration('namespace')
-    use_namespace = LaunchConfiguration('use_namespace')
-
     declare_port_name = DeclareLaunchArgument(
         'port_name',
         default_value='ttyTHS1')

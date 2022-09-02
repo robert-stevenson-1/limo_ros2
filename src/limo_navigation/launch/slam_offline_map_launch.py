@@ -6,12 +6,12 @@ import os
 
 def generate_launch_description():
 
-    rviz_config_dir = os.path.join(get_package_share_directory('limo_bringup'),
+    rviz_config_dir = os.path.join(get_package_share_directory('limo_navigation'),
                                    'rviz', 'slam_toolbox_default.rviz')
     return LaunchDescription([
         launch_ros.actions.Node(
           parameters=[
-            get_package_share_directory("slam_toolbox") + '/config/mapper_params_offline.yaml'
+            get_package_share_directory('limo_navigation') + '/params/mapper_params_offline.yaml'
           ],
           package='slam_toolbox',
           executable='sync_slam_toolbox_node',

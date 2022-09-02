@@ -15,7 +15,7 @@ def generate_launch_description():
  
   # Constants for paths to different files and folders
   urdf_model_name = 'limo_four_diff.gazebo'
-  world_file_name = 'empty_sit_map.world'
+  world_file_name = 'simple.world'
   rviz_config_file_name = 'urdf.rviz'
 
   robot_name_in_model = 'limo_gazebosim'
@@ -69,6 +69,11 @@ def generate_launch_description():
   use_simulator = LaunchConfiguration('use_simulator')
   world = LaunchConfiguration('world')
  
+  remappings = [((namespace, '/tf'), '/tf'),
+                ((namespace, '/tf_static'), '/tf_static'),
+                ('/tf', 'tf'),
+                ('/tf_static', 'tf_static')]
+
   # Declare the launch arguments  
   declare_use_sim_time_cmd = DeclareLaunchArgument(
     name='use_sim_time',
@@ -112,7 +117,7 @@ def generate_launch_description():
  
   declare_use_rviz_cmd = DeclareLaunchArgument(
     name='use_rviz',
-    default_value='True',
+    default_value='False',
     description='Whether to start RVIZ')
  
   declare_use_simulator_cmd = DeclareLaunchArgument(
@@ -129,7 +134,8 @@ def generate_launch_description():
   start_robot_state_publisher_cmd = Node(
     package='robot_state_publisher',
     executable='robot_state_publisher',
-    parameters=[{'robot_description': Command(['xacro ', urdf_model]),'use_sim_time': use_sim_time}]
+    parameters=[{'robot_description': Command(['xacro ', urdf_model]),'use_sim_time': use_sim_time}],
+            remappings=remappings
     )
  
   # Publish the joint states of the robot
@@ -138,14 +144,16 @@ def generate_launch_description():
     executable='joint_state_publisher',
     name='joint_state_publisher',
     condition=UnlessCondition(gui),
-    parameters=[{'use_sim_time': use_sim_time}])
+    parameters=[{'use_sim_time': use_sim_time}],
+            remappings=remappings)
     
   start_joint_state_publisher_gui_node = Node(
     condition=IfCondition(gui),
     package='joint_state_publisher_gui',
     executable='joint_state_publisher_gui',
     name='joint_state_publisher_gui',
-    parameters=[{'use_sim_time': use_sim_time}])
+    parameters=[{'use_sim_time': use_sim_time}],
+            remappings=remappings)
 
   # start_dummy_sensors=Node(
   #   package='dummy_sensors', 
@@ -154,6 +162,7 @@ def generate_launch_description():
 
   # Launch RViz
   start_rviz_cmd = Node(
+    condition=IfCondition(use_rviz),
     package='rviz2',
     executable='rviz2',
     name='rviz2',

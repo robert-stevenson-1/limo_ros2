@@ -29,7 +29,7 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     limo_cartographer_prefix = get_package_share_directory('limo_navigation')
     cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', default=os.path.join(
-                                                  limo_cartographer_prefix, 'config_files'))
+                                                  limo_cartographer_prefix, 'params'))
     configuration_basename = LaunchConfiguration('configuration_basename',
                                                  default='limo_lds_2d.lua')
 
@@ -37,7 +37,7 @@ def generate_launch_description():
     publish_period_sec = LaunchConfiguration('publish_period_sec', default='1.0')
 
     rviz_config_dir = os.path.join(get_package_share_directory('limo_navigation'),
-                                   'config_files', 'demo_2d.rviz')
+                                   'rviz', 'limo_navigation.rviz')
 
     return LaunchDescription([
         DeclareLaunchArgument(
