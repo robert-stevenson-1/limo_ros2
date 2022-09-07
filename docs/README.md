@@ -18,14 +18,17 @@ Docker and virtual machines provide similar benefits, however, they are function
 
 ![Docker VM Differences](./assets/docker_vm_diff.png)
 
-## Visual Studio Code Setup on Local PC
+## Visual Studio Code First Time Setup on Local PC
 
 ### References
 * [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
-* [Template](https://github.com/athackst/vscode_ros2_workspace)
+* [Useful template for reference](https://github.com/athackst/vscode_ros2_workspace)
 
-### [Extensions](https://code.visualstudio.com/docs/editor/extension-marketplace)
+### [Required extensions for VS Code](https://code.visualstudio.com/docs/editor/extension-marketplace)
 * Remote Development
+```bash
+code  --install-extension ms-vscode-remote.vscode-remote-extensionpack
+```
 
 ### Connect to LIMO and start container
 

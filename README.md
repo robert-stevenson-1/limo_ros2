@@ -7,7 +7,7 @@
 ```bash
 git clone https://github.com/westonrobot/limo_ros2.git
 ```
-## Login the limo via VS Code Remote Development extension [(More info here)](./docs/README.md)
+## Login the limo via VS Code Remote Development extension [(New to Docker or first time setting up? More info here)](./docs/README.md)
 
 1. Launch VS Code
 2. SSH into limo and open workspace folder
