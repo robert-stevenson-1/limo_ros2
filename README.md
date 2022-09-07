@@ -1,16 +1,13 @@
-## LIMO ROS 2
+# LIMO ROS 2
+
+## [Documentation](https://github.com/agilexrobotics/limo-doc)
 
 ## Setup
+### Clone the repo
 ```bash
-# Create local workspace
-mkdir -p ~/limo_ros2_ws/src
-cd ~/limo_ros2_ws/src
-# Clone the repo
 git clone https://github.com/westonrobot/limo_ros2.git
-
-mv limo_ros2/.devcontainer/ ..
 ```
-## [Recommend] Login the limo via VS Code Remote Development extension. 
+## Login the limo via VS Code Remote Development extension [(More info here)](./docs/README.md)
 
 1. Launch VS Code
 2. SSH into limo and open workspace folder
@@ -18,9 +15,6 @@ mv limo_ros2/.devcontainer/ ..
 
 ## Convenience script for compiling limo_ros2 packages
 ```bash
-# Do once, copy to workspace root
-cp src/limo_ros2/./build.sh . 
-
 # in workspace root
 ./build.sh
 
@@ -38,7 +32,13 @@ ros2 launch limo_bringup limo_start.launch.py
 
 # Bringup robot in simulator
 # Add use_sim_time:=true argument for subsequent launches if using sim
-ros2 launch ros2 launch limo_gazebosim limo_gazebo_diff.launch.py
+ros2 launch limo_gazebosim limo_gazebo_diff.launch.py
+```
+
+## Bringup camera
+
+```bash
+ros2 launch astra_camera dabai.launch.py
 ```
 
 ## Teleoperation
