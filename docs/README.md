@@ -2,9 +2,9 @@
 
 You can watch a live demo of the [Visual Studio Code Remote - Containers](https://www.youtube.com/watch?v=TVcoGLL6Smo) on YouTube.
 
-### [Why Docker](https://docs.docker.com/get-started/overview/)
+### Why Docker
 
-Docker provides OS-level virtualisation, allowing for the deployment of software packages in isolated environments called containers. 
+[Docker](https://docs.docker.com/get-started/overview/) provides OS-level virtualisation, allowing for the deployment of software packages in isolated environments called containers. 
 
 ![Docker Architecture](./assets/docker_architecture.svg)
 
@@ -17,10 +17,6 @@ Docker and virtual machines provide similar benefits, however, they are function
 ![Docker VM Differences](./assets/docker_vm_diff.png)
 
 ### Visual Studio Code First Time Setup on Local PC
-
-#### References
-* [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
-* [Useful template for reference](https://github.com/athackst/vscode_ros2_workspace)
 
 #### [Required extensions for VS Code](https://code.visualstudio.com/docs/editor/extension-marketplace)
 * Remote Development
@@ -40,3 +36,7 @@ code  --install-extension ms-vscode-remote.vscode-remote-extensionpack
 2. Run docker image
     * Once in the workspace, VS Code should detect the Dockerfile and ask to build container
     * Alternatively, Ctrl + Shift + P to bring up the command pallete and search for Remote-Containers: Rebuild Container
+
+### References
+* [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
+* [Useful template for reference](https://github.com/athackst/vscode_ros2_workspace)
