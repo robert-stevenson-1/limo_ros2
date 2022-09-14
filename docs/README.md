@@ -1,10 +1,8 @@
 # Introduction to developing with Docker and VS Code
 
-This repo provides the base ROS2 packages needed to develop on the LIMO. Currently, there are no LTS distributions of ROS2 available for Ubuntu 18.04 which is the base OS for the Jetson Nano.
+You can watch a live demo of the [Visual Studio Code Remote - Containers](https://www.youtube.com/watch?v=TVcoGLL6Smo) on YouTube.
 
-Hence, we introduce the use of Docker to provide a Ubuntu 22.04 environment to develop with ROS2 Humble.
-
-## [Why Docker](https://docs.docker.com/get-started/overview/)
+### [Why Docker](https://docs.docker.com/get-started/overview/)
 
 Docker provides OS-level virtualisation, allowing for the deployment of software packages in isolated environments called containers. 
 
@@ -12,25 +10,25 @@ Docker provides OS-level virtualisation, allowing for the deployment of software
 
 *Images are prepacked beforehand and become containers when run on Docker Engine*
 
-## Docker vs virtual machines
+### Docker vs virtual machines
 
 Docker and virtual machines provide similar benefits, however, they are functionally different. 
 
 ![Docker VM Differences](./assets/docker_vm_diff.png)
 
-## Visual Studio Code First Time Setup on Local PC
+### Visual Studio Code First Time Setup on Local PC
 
-### References
+#### References
 * [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
 * [Useful template for reference](https://github.com/athackst/vscode_ros2_workspace)
 
-### [Required extensions for VS Code](https://code.visualstudio.com/docs/editor/extension-marketplace)
+#### [Required extensions for VS Code](https://code.visualstudio.com/docs/editor/extension-marketplace)
 * Remote Development
 ```bash
 code  --install-extension ms-vscode-remote.vscode-remote-extensionpack
 ```
 
-### Connect to LIMO and start container
+#### Connect to LIMO and start container
 
 1. SSH into the LIMO using VS Code
     * In VS Code, Ctrl + Shift + P to bring up the command pallete
