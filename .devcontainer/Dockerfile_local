@@ -1,11 +1,8 @@
 FROM westonrobot/ros:humble-ci
 
 ENV DEBIAN_FRONTEND=noninteractive
-# For Chinese mainland user.
-# RUN  sed -i "s/ports.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list
-# RUN  sed -i "s/archive.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list
 # Set up user account
-RUN useradd -ms /bin/bash ros && echo "ros:ros" | chpasswd && adduser ros sudo
+RUN useradd -ms /bin/bash ros && echo "ros:ros" | chpasswd && adduser ros sudo video
 # Builder dependencies installation
 RUN apt-get update \
     && apt-get install -qq -y --no-install-recommends \
@@ -18,7 +15,12 @@ RUN apt-get update \
     libgtk-3-dev \
     libglfw3-dev \
     libgl1-mesa-dev \
-    libglu1-mesa-dev \    
+    libglu1-mesa-dev \
+    libglvnd0 \
+    libglx0 \
+    ligegl1 \
+    libxext6 \
+    libx11-6 \
     curl \  
     libusb-1.0* \
     udev \
@@ -72,4 +74,8 @@ RUN git clone https://github.com/libuvc/libuvc.git &&\
     sudo make install &&\
     sudo ldconfig  &&\
     cd ../.. && rm -r libuvc*
+
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+
 RUN echo "source /opt/ros/humble/setup.bash" >> /etc/bash.bashrc
