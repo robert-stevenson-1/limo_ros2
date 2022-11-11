@@ -630,7 +630,7 @@ void LimoDriver::publishLimoState(double stamp, uint8_t vehicle_state, uint8_t c
                                   double battery_voltage, uint16_t error_code, int8_t motion_mode) {
 
     limo_msgs::msg::LimoStatus status_msg;
-    status_msg.header.stamp = rclcpp::Time(stamp);
+    status_msg.header.stamp = rclcpp::Time(RCL_S_TO_NS(stamp));
     status_msg.vehicle_state = vehicle_state;
     status_msg.control_mode = control_mode;
     status_msg.battery_voltage = battery_voltage;
