@@ -531,6 +531,8 @@ void LimoDriver::publishOdometry(double stamp, double linear_velocity,
     double dt = stamp - last_stamp;
     last_stamp = stamp;
 
+    rclcpp::Time now = rclcpp::Time(RCL_S_TO_NS(stamp));
+
     double wz = 0.0;
     double vx = 0.0, vy = 0.0;
     
@@ -581,10 +583,8 @@ void LimoDriver::publishOdometry(double stamp, double linear_velocity,
     limo_yaw.setRPY(0,0,rad);
 
     geometry_msgs::msg::Quaternion odom_quat = tf2::toMsg(limo_yaw);
-  
     //std::cout<< "odom_quat:" << odom_quat<<std::endl;
     if (pub_odom_tf_) {
-        rclcpp::Time now = this->get_clock()->now();
         geometry_msgs::msg::TransformStamped tf_msg;
         
         // geometry_msgs::TransformStamped tf_msg;
@@ -601,7 +601,6 @@ void LimoDriver::publishOdometry(double stamp, double linear_velocity,
 
     // odom message
     // nav_msgs::Odometry odom_msg;
-    rclcpp::Time now = this->get_clock()->now();
     nav_msgs::msg::Odometry odom_msg;
     
     odom_msg.header.stamp = now;
@@ -631,7 +630,7 @@ void LimoDriver::publishLimoState(double stamp, uint8_t vehicle_state, uint8_t c
                                   double battery_voltage, uint16_t error_code, int8_t motion_mode) {
 
     limo_msgs::msg::LimoStatus status_msg;
-    status_msg.header.stamp = rclcpp::Time(stamp);
+    status_msg.header.stamp = rclcpp::Time(RCL_S_TO_NS(stamp));
     status_msg.vehicle_state = vehicle_state;
     status_msg.control_mode = control_mode;
     status_msg.battery_voltage = battery_voltage;
