@@ -31,6 +31,7 @@ RUN apt-get update \
     swig \
     software-properties-common \
     python3-pip \
+    ros-humble-rmw-cyclonedds-cpp \
     ros-humble-rviz2* \
     ros-humble-cartographer* \
     ros-humble-nav* \
@@ -78,5 +79,6 @@ RUN git clone https://github.com/libuvc/libuvc.git &&\
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES graphics,utility,compute
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /etc/bash.bashrc
