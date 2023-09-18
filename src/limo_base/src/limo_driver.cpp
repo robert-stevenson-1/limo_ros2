@@ -299,10 +299,10 @@ void LimoDriver::parseFrame(const LimoFrame& frame) {
         }
         /****************** sensor frame *****************/
         case MSG_ODOMETRY_ID: {
-            int32_t left_wheel_odom = (frame.data[3] & 0xff) | (frame.data[2] << 8) |
+            /* int32_t left_wheel_odom = (frame.data[3] & 0xff) | (frame.data[2] << 8) |
                                       (frame.data[1] << 16)  | (frame.data[0] << 24);
             int32_t right_wheel_odom = (frame.data[7] & 0xff) | (frame.data[6] << 8) |
-                                       (frame.data[5] << 16)  | (frame.data[4] << 24);
+                                       (frame.data[5] << 16)  | (frame.data[4] << 24); */
             // RCLCPP_INFO(this->get_logger(),"MSG_SYSTEM_STATE_ID :");
             
             break;
@@ -490,8 +490,8 @@ void LimoDriver::publishIMUData(double stamp) {
 
     if (flag==0)
     {
-        double present_theta_ =imu_data_.yaw;
-        double last_theta_ = imu_data_.yaw;
+        present_theta_ =imu_data_.yaw;
+        last_theta_ = imu_data_.yaw;
         flag=1;    
         
     }
