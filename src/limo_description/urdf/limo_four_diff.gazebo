@@ -209,11 +209,11 @@
             <plugin name="gazebo_ros_depth_camera_sensor" filename="libgazebo_ros_camera.so">
                 <ros>
                     <namespace>/limo</namespace>
-                    <argument>limo_camera/image_raw:=limo_camera/image</argument>
-                    <argument>limo_camera/image_depth:=limo_camera/depth/camera_image_depth</argument>
-                    <argument>limo_camera/camera_info:=limo_camera/camera_info_raw</argument>
-                    <argument>limo_camera/camera_info_depth:=limo_camera/camera_info_depth</argument>
-                    <argument>limo_camera/points:=limo_camera/camera_points</argument>
+                    <remapping>limo_camera/image_raw:=limo_camera/image</remapping>
+                    <remapping>limo_camera/image_depth:=limo_camera/depth/camera_image_depth</remapping>
+                    <remapping>limo_camera/camera_info:=limo_camera/camera_info_raw</remapping>
+                    <remapping>limo_camera/camera_info_depth:=limo_camera/camera_info_depth</remapping>
+                    <remapping>limo_camera/points:=limo_camera/camera_points</remapping>
                 </ros>
                 <camera_name>depth_camera_link</camera_name>
                 <frame_name>depth_camera_link</frame_name>

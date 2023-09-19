@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
-<robot name="limo_four_diff"
-    xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="limo_four_diff" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- a lightweight robot geometry model -->
+    <xacro:arg name="model_lite" default="true" />
 
     <xacro:include filename="$(find limo_description)/urdf/limo_xacro.xacro" />
     <!-- <xacro:include filename="$(find limo_description)/urdf/limo_four_diff_2.gazebo" /> -->
@@ -27,7 +28,12 @@
         <visual>
             <origin xyz="0 0 -0.15" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="file://$(find limo_description)/meshes/limo_base.dae" scale="1 1 1"/>
+                <xacro:if value="$(arg model_lite)">
+                    <mesh filename="file://$(find limo_description)/meshes/limo_base_lite.dae" scale="1 1 1"/>
+                </xacro:if>
+                <xacro:unless value="$(arg model_lite)"> 
+                    <mesh filename="file://$(find limo_description)/meshes/limo_base.dae" scale="1 1 1"/>
+                </xacro:unless>
             </geometry>
         </visual>
         <collision>
@@ -73,19 +79,19 @@
         <origin xyz="0.0 0 -0.1" rpy="0 0 0"/>
     </xacro:limo_imu>
 
-    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="front_left" reflect="1">
+    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="front_left" reflect="1" model_lite="$(arg model_lite)">
         <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0  0" />
     </xacro:limo_wheel>
 
-    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="front_right" reflect="-1">
+    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="front_right" reflect="-1" model_lite="$(arg model_lite)">
         <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="${M_PI} 0 0" />
     </xacro:limo_wheel>
 
-    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="rear_left" reflect="1">
+    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="rear_left" reflect="1" model_lite="$(arg model_lite)">
         <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:limo_wheel>
 
-    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="rear_right" reflect="-1">
+    <xacro:limo_wheel parent_prefix="base_link" wheel_prefix="rear_right" reflect="-1" model_lite="$(arg model_lite)">
         <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="${M_PI} 0 0" />
     </xacro:limo_wheel>
 
