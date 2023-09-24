@@ -31,6 +31,7 @@ RUN apt-get update \
     swig \
     software-properties-common \
     python3-pip \
+    ros-humble-simulation \
     ros-humble-rmw-cyclonedds-cpp \
     ros-humble-rviz2* \
     ros-humble-cartographer* \

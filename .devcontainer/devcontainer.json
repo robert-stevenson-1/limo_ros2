@@ -5,7 +5,7 @@
     // "dockerFile": "Dockerfile",
     "image": "westonrobot/limo_ros:humble_22082023",
     "build": {
-        "args": {
+       "args": {
             "WORKSPACE": "${containerWorkspaceFolder}"
         }
     },
@@ -23,9 +23,11 @@
         "--gpus=all"
     ],
     "containerEnv": {
-        "DISPLAY": "${localEnv:DISPLAY}",
+        "DISPLAY": ":0",
+        "ROS_LOCALHOST_ONLY": "1",
         "LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
     },
+    
     // Set *default* container specific settings.json values on container create.
     "settings": {
         "terminal.integrated.profiles.linux": {
