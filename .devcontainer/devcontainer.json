@@ -20,11 +20,12 @@
         "--security-opt=seccomp:unconfined",
         "--security-opt=apparmor:unconfined",
         "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+        "--volume=/home/agilex/.Xauthority:/home/ros/.Xauthority",
         "--gpus=all"
     ],
     "containerEnv": {
         "DISPLAY": ":0",
-        "ROS_LOCALHOST_ONLY": "1",
+        "ROS_LOCALHOST_ONLY": "0",
         "LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
     },
     
