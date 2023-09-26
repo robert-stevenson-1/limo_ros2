@@ -193,7 +193,7 @@ def generate_launch_description():
                     output='screen')
 
   twist_watchdog = Node(
-    package='uol_turtlebot_simulator',
+    package='limo_gazebosim',
     executable='twist_watchdog.py',
     name='twist_watchdog'
   )
