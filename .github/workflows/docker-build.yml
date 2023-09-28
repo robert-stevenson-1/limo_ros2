@@ -1,0 +1,62 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ humble ]
+    tags:
+      - '*'
+  pull_request:
+    branches: [ humble ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: What
+      run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Docker Login LCAS
+      # You may pin to the exact commit or the version.
+      # uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      uses: docker/login-action@v2
+      with:
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        registry: lcas.lincoln.ac.uk
+        # Username used to log against the Docker registry
+        username: ${{ secrets.LCAS_REGISTRY_PUSHER }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.LCAS_REGISTRY_TOKEN }}
+    - name: Docker Login dockerhub
+      uses: docker/login-action@v2
+      with:
+        # Username used to log against the Docker registry
+        username: ${{ secrets.DOCKERHUB_USER }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push limo_ros2 for arm64
+      uses: docker/build-push-action@v5
+      with:
+        context: .devcontainer
+        file: Dockerfile
+        platforms: linux/arm64
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: lcas.lincoln.ac.uk/lcas/limo_ros_arm64:${{ env.BRANCH }}
+        build-args: |
+            BRANCH=${{ env.BRANCH }}
+    - name: Build and push limo_ros2 for amd64
+      uses: docker/build-push-action@v5
+      with:
+        context: .devcontainer
+        file: Dockerfile
+        platforms: linux/amd64
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: lcas.lincoln.ac.uk/lcas/limo_ros_amd64:${{ env.BRANCH }}
+        build-args: |
+            BRANCH=${{ env.BRANCH }}
+        
