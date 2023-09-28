@@ -43,7 +43,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .devcontainer
-        file: Dockerfile
+        file: .devcontainer/Dockerfile
         platforms: linux/arm64
         push: ${{ github.event_name != 'pull_request' }}
         tags: lcas.lincoln.ac.uk/lcas/limo_ros_arm64:${{ env.BRANCH }}
@@ -53,7 +53,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .devcontainer
-        file: Dockerfile
+        file: .devcontainer/Dockerfile
         platforms: linux/amd64
         push: ${{ github.event_name != 'pull_request' }}
         tags: lcas.lincoln.ac.uk/lcas/limo_ros_amd64:${{ env.BRANCH }}
