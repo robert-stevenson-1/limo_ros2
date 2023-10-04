@@ -213,7 +213,7 @@ def generate_launch_description():
   ld.add_action(declare_use_rviz_cmd) 
   ld.add_action(declare_use_simulator_cmd)
   ld.add_action(declare_world_cmd)
-#  ld.add_action(twist_watchdog) breaks the exec
+  ld.add_action(twist_watchdog)
  
   # Add any actions
   ld.add_action(start_gazebo_server_cmd)
