@@ -97,20 +97,20 @@
         <sensor name="laser" type="ray">
             <always_on>true</always_on>
             <visualize>true</visualize>
-            <update_rate>10</update_rate>
+            <update_rate>8.0</update_rate>
             <ray>
                 <scan>
                     <horizontal>
-                        <samples>120</samples>
+                        <samples>375</samples> <!-- 0.96 deg @ 8Hz so 360/0.96=375 samples -->
                         <resolution>1.000000</resolution>
                         <min_angle>-3.14159</min_angle>
                         <max_angle>3.14159</max_angle>
                     </horizontal>
                 </scan>
                 <range>
-                    <min>0.3</min>
-                    <max>15.0</max>
-                    <resolution>0.015</resolution>
+                    <min>0.12</min>
+                    <max>8.0</max>
+                    <resolution>0.02</resolution>
                 </range>
                 <noise>
                     <type>gaussian</type>
