@@ -82,7 +82,7 @@ def generate_launch_description():
 
   declare_use_joint_state_publisher_cmd = DeclareLaunchArgument(
     name='gui',
-    default_value='True',
+    default_value='False',
     description='Flag to enable joint_state_publisher_gui')
  
   declare_namespace_cmd = DeclareLaunchArgument(
@@ -220,7 +220,7 @@ def generate_launch_description():
   ld.add_action(start_gazebo_client_cmd)
   ld.add_action(spawn_entity_cmd)
   ld.add_action(start_robot_state_publisher_cmd)
-  ld.add_action(start_joint_state_publisher_gui_node)
+  ld.add_action(start_joint_state_publisher_cmd)
   # ld.add_action(start_dummy_sensors)
   ld.add_action(start_rviz_cmd)
  
