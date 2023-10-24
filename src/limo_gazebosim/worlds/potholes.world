@@ -9,7 +9,7 @@
 
 		<!-- simulation table -->
 		<include>
-			<uri>model://simulation_table_small</uri>
+			<uri>model://potholes</uri>
 			<pose>0.0 -0.55 0 0 0 0</pose>
 		</include>
 	</world>
