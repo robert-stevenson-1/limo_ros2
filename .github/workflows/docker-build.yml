@@ -38,7 +38,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: lcas
 
     steps:
     - uses: actions/checkout@v3
