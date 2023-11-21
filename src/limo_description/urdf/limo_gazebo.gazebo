@@ -98,7 +98,6 @@
               <depthImageCameraInfoTopicName>/limo/depth/camera_info</depthImageCameraInfoTopicName>
               <pointCloudTopicName>/limo/depth/points</pointCloudTopicName>
               <frameName>depth_link</frameName>
-              <cameraname>depth_camera_link</cameraname>
               
               <pointCloudCutoff>0.5</pointCloudCutoff>
               <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
