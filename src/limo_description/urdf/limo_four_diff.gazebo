@@ -101,9 +101,7 @@
             <ray>
                 <scan>
                     <horizontal>
-                        <samples>292</samples> <!-- to cover 4 rad @ 0.7826 deg -->
-                        <!-- 0.96 deg @ 8Hz so 360/0.96=375 samples -->
-                        <!-- real sensor: 460 samples @0.78260869565 deg -->
+                        <samples>292</samples>
                         <resolution>1.000000</resolution>
                         <min_angle>-2.0</min_angle>
                         <max_angle>2.0</max_angle>
