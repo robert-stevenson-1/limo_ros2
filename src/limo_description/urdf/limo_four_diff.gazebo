@@ -196,7 +196,6 @@
             <update_rate>1</update_rate>
             <camera name="limo_camera">
                 <horizontal_fov>1.23918</horizontal_fov>
-                1.23918 color 1.185079 depth
                 <image>
                     <width>640</width>
                     <height>480</height>
