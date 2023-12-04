@@ -12,11 +12,15 @@ def generate_launch_description():
     # Get the launch directory
     launch_dir = os.path.join(
         get_package_share_directory('limo_navigation'), 'launch')
+    maps_dir = os.path.join(
+        get_package_share_directory('limo_navigation'), 'maps')
+    
 
     # Create the launch configuration variables
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')
+    map_yaml_file = LaunchConfiguration('map')
 
     lifecycle_nodes = [
         'map_server',
@@ -39,6 +43,11 @@ def generate_launch_description():
         'autostart', default_value='true',
         description='Automatically startup the nav2 stack')
 
+    declare_map = DeclareLaunchArgument(
+        'map',
+        default_value=os.path.join(maps_dir, 'simple_map.yaml'),
+        description='Full path to map yaml file to load')
+
     launch_limo_localization = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(launch_dir, 'limo_localization.launch.py')),
@@ -47,6 +56,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time,
             'use_lifecycle_mgr': 'false',
             'use_rviz': 'false',
+            'map': map_yaml_file,
         }.items())
 
     launch_limo_controller = IncludeLaunchDescription(
@@ -74,6 +84,7 @@ def generate_launch_description():
     ld.add_action(declare_use_sim_time)
     ld.add_action(declare_autostart)
     ld.add_action(declare_namespace)
+    ld.add_action(declare_map)
 
     ld.add_action(launch_limo_localization)
     ld.add_action(launch_limo_controller)
