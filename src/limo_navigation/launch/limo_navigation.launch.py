@@ -9,18 +9,15 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 def generate_launch_description():
-    # Get the launch directory
-    launch_dir = os.path.join(
-        get_package_share_directory('limo_navigation'), 'launch')
-    maps_dir = os.path.join(
-        get_package_share_directory('limo_navigation'), 'maps')
-    
+    # get package directory
+    pkg_dir = get_package_share_directory('limo_navigation') 
 
     # Create the launch configuration variables
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')
     map_yaml_file = LaunchConfiguration('map')
+    params_file = LaunchConfiguration('params_file')
 
     lifecycle_nodes = [
         'map_server',
@@ -45,23 +42,30 @@ def generate_launch_description():
 
     declare_map = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(maps_dir, 'simple_map.yaml'),
+        default_value=os.path.join(pkg_dir, 'maps', 'simple_map.yaml'),
         description='Full path to map yaml file to load')
+
+    declare_params_file = DeclareLaunchArgument(
+        'params_file',
+        default_value=os.path.join(
+            pkg_dir, 'params', 'nav2_params.yaml'),
+        description='Full path to the ROS2 parameters file to use')
 
     launch_limo_localization = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(launch_dir, 'limo_localization.launch.py')),
+            os.path.join(pkg_dir, 'launch', 'limo_localization.launch.py')),
         launch_arguments={
             'namespace': namespace,
             'use_sim_time': use_sim_time,
             'use_lifecycle_mgr': 'false',
             'use_rviz': 'false',
             'map': map_yaml_file,
+            'params_file': params_file,
         }.items())
 
     launch_limo_controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(launch_dir, 'limo_controller.launch.py')),
+            os.path.join(pkg_dir, 'launch', 'limo_controller.launch.py')),
         launch_arguments={
             'namespace': namespace,
             'use_sim_time': use_sim_time,
@@ -85,6 +89,7 @@ def generate_launch_description():
     ld.add_action(declare_autostart)
     ld.add_action(declare_namespace)
     ld.add_action(declare_map)
+    ld.add_action(declare_params_file)
 
     ld.add_action(launch_limo_localization)
     ld.add_action(launch_limo_controller)
