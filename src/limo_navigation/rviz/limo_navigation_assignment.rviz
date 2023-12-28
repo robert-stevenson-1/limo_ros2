@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
+        - /Map1
         - /Map1/Topic1
         - /LaserScan1/Topic1
         - /Map (Local Cost Map)1
@@ -277,7 +278,7 @@ Visualization Manager:
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz_default_plugins/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
       Enabled: true
       Name: Map (Local Cost Map)
@@ -342,25 +343,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.231149673461914
+      Distance: 2.6986119747161865
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.33141353726387024
-        Y: -0.6255524158477783
-        Z: 0.975892186164856
+        X: -0.13609108328819275
+        Y: -0.6166419982910156
+        Z: 0.9786997437477112
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.4447964429855347
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.05039886012673378
+      Yaw: 6.268584251403809
     Saved: ~
 Window Geometry:
   Displays:
